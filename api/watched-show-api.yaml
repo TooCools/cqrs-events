@@ -1,0 +1,102 @@
+openapi: 3.0.0
+info:
+  title: Watched Show API
+  version: 0.0.1
+paths:
+  /show/{userId}:
+    get:
+      summary: Returns a list of shows the user watched.
+      operationId: getShows
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200': # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Show'
+  /show/{userId}/{showId}:
+    get:
+      summary: Returns what is watched from given show
+      operationId: getShow
+      parameters:
+        - in: path
+          name: showId
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200': # status code
+          description: A JSON array of user names
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Show'
+  /show/{userId}/episode:
+    post:
+      summary: Adds a show to the watched list for the user
+      operationId: addEpisode
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Episode'
+      responses:
+        '202': # status code
+          description: Accepted
+components:
+  schemas:
+    Show:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        seasons:
+          type: array
+          items:
+            $ref: '#/components/schemas/Season'
+    Season:
+      type: object
+      properties:
+        id:
+          type: string
+        number:
+          type: number
+        showId:
+          type: string
+        episodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Episode'
+    Episode:
+      type: object
+      properties:
+        id:
+          type: string
+        number:
+          type: number
+        name:
+          type: string
+        seasonId:
+          type: string
