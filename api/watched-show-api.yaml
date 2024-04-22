@@ -21,7 +21,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Show'
+                  $ref: '#/components/schemas/WatchedShow'
   /show/{userId}/{showId}:
     get:
       summary: Returns what is watched from given show
@@ -32,6 +32,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
         - in: path
           name: userId
           required: true
@@ -43,7 +44,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Show'
+                $ref: '#/components/schemas/WatchedShow'
   /show/{userId}/episode:
     post:
       summary: Adds a show to the watched list for the user
@@ -59,44 +60,58 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Episode'
+              $ref: '#/components/schemas/WatchedEpisodeRequest'
       responses:
         '202': # status code
           description: Accepted
 components:
   schemas:
-    Show:
+    WatchedShow:
       type: object
       properties:
         id:
           type: string
-        name:
-          type: string
+          format: uuid
         seasons:
           type: array
           items:
-            $ref: '#/components/schemas/Season'
-    Season:
+            $ref: '#/components/schemas/WatchedSeason'
+    WatchedSeason:
       type: object
       properties:
         id:
           type: string
-        number:
-          type: number
-        showId:
-          type: string
+          format: uuid
         episodes:
           type: array
           items:
-            $ref: '#/components/schemas/Episode'
-    Episode:
+            $ref: '#/components/schemas/WatchedEpisode'
+    WatchedEpisode:
       type: object
       properties:
         id:
           type: string
-        number:
-          type: number
-        name:
+          format: uuid
+        episodeId:
           type: string
+          format: uuid
+        watchTs:
+          type: string
+          format: date-time
+
+    WatchedEpisodeRequest:
+      type: object
+      properties:
+        episodeId:
+          type: string
+          format: uuid
         seasonId:
           type: string
+          format: uuid
+        showId:
+          type: string
+          format: uuid
+      required:
+        - episodeId
+        - seasonId
+        - showId

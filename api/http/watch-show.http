@@ -1,0 +1,45 @@
+### Add first episode
+
+POST {{url}}/show/123/episode
+Content-Type: application/json
+
+{
+  "showId": "c0c855f7-89a9-449d-a8d5-60aea7671483",
+  "seasonId": "482bffc0-799f-4179-bcf1-c1b0bb62e39a",
+  "episodeId": "6c870b6d-5140-4767-89d5-68f34d27a693"
+}
+
+### Add second episode
+
+POST {{url}}/show/123/episode
+Content-Type: application/json
+
+{
+  "showId": "c0c855f7-89a9-449d-a8d5-60aea7671483",
+  "seasonId": "482bffc0-799f-4179-bcf1-c1b0bb62e39a",
+  "episodeId": "79016ca7-b3ae-4d55-a32d-540b43ed3a91"
+}
+
+### Add third episode from another season
+
+POST {{url}}/show/123/episode
+Content-Type: application/json
+
+{
+  "showId": "4127c372-a207-4c23-847c-25dc7257f80d",
+  "seasonId": "2305aeb6-1b60-4775-a25b-bca9d6bfd849",
+  "episodeId": "4b579405-6f50-46bd-baad-cebf9838a409"
+}
+
+### Get watched shows
+
+GET {{url}}/show/123
+
+### Get watched show 1
+
+GET {{url}}/show/123/c0c855f7-89a9-449d-a8d5-60aea7671483
+
+
+### Get watched show 2
+
+GET {{url}}/show/123/4127c372-a207-4c23-847c-25dc7257f80d
